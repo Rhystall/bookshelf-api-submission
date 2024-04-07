@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node start src/server.js",
     "start-dev": "nodemon start src/server.js",
-    "lint": "eslint ./"
+    "lint": "eslint ./src"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +16,8 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
     "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^21.3.8"
   }
 }
