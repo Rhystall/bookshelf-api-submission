@@ -89,9 +89,10 @@ const getAllBooksHandler = (request, h) => {
 
   // Jika ada query name
   if (queryName) {
+    const queryNameLowerCase = queryName.toLowerCase();
     const bookFilterName = books.filter((book) => {
-      const Regex = new RegExp(queryName, 'gi');
-      return Regex.test(book.name);
+      const bookNameLowerCase = book.name.toLowerCase();
+      return bookNameLowerCase.includes(queryNameLowerCase);
     });
     const response = h.response({
       status: 'success',
