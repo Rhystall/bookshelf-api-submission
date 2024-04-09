@@ -69,7 +69,7 @@ const addBookHandler = (request, h) => {
 
 // Handler untuk mendapatkan semua buku (id, name, publisher)
 const getAllBooksHandler = (request, h) => {
-  const { queryName, reading, finished } = request.query;
+  const { name: queryName, reading, finished } = request.query;
 
   // Kondisi jika tidak ada query
   if (!queryName && !reading && !finished) {
@@ -89,22 +89,25 @@ const getAllBooksHandler = (request, h) => {
 
   // Jika ada query name
   if (queryName) {
-    const queryNameLowerCase = queryName.toLowerCase();
-    const bookFilterName = books.filter((book) => {
-      const bookNameLowerCase = book.name.toLowerCase();
-      return bookNameLowerCase.includes(queryNameLowerCase);
+    const filteredBooksName = books.filter((book) => {
+      // if there is a query name
+      const nameRegex = new RegExp(queryName, 'gi');
+      return nameRegex.test(book.name);
     });
-    const response = h.response({
-      status: 'success',
-      data: {
-        books: bookFilterName.map((book) => ({
-          id: book.id,
-          name: book.name,
-          publisher: book.publisher,
-        })),
-      },
-    });
-    response.code(200);
+
+    const response = h
+      .response({
+        status: 'success',
+        data: {
+          books: filteredBooksName.map((book) => ({
+            id: book.id,
+            name: book.name,
+            publisher: book.publisher,
+          })),
+        },
+      })
+      .code(200);
+
     return response;
   }
 
